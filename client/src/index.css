@@ -1,0 +1,277 @@
+/* Reset + base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: #f5f7fb;
+  color: #1f2937;
+}
+
+/* Page container */
+.page {
+  padding: 24px;
+}
+
+/* Card */
+.card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+/* Headings */
+h1, h2 {
+  margin-bottom: 16px;
+}
+
+h3 {
+  margin-bottom: 12px;
+  color: #374151;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+th {
+  background: #f1f5f9;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+}
+
+td {
+  padding: 10px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* Buttons */
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+/* Inputs */
+input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  margin-right: 8px;
+}
+.btn-primary {
+  background: #2e7d32;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.icon-btn {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: #f5f5f5;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  /* Allow print areas */
+  .invoice,
+  .invoice *,
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  .invoice,
+  .print-area {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 24px;
+    background: white;
+  }
+
+  /* Hide modal chrome */
+  .modal-header,
+  .modal-footer,
+  .icon-btn,
+  .btn-primary,
+  .btn-secondary {
+    display: none !important;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  width: 720px;
+  max-width: 95vw;
+  max-height: 90vh;            /* 🔥 key */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;            /* 🔥 ONLY BODY SCROLLS */
+  flex: 1;
+}
+.modal-footer {
+  border-top: 1px solid #eee;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: #fff;
+  flex-shrink: 0;
+}
+.invoice-header-print {
+  display: none;
+}
+
+@media print {
+  .invoice-header-print {
+    display: block;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .invoice-header-print h2 {
+    margin-bottom: 4px;
+  }
+
+  .invoice-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+}
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e7f4e8, #86de8a);
+}
+
+.login-card {
+  background: white;
+  padding: 40px;
+  width: 360px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.login-card h2 {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.login-subtitle {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.form-group input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.error {
+  background: #fdecea;
+  color: #b91c1c;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
