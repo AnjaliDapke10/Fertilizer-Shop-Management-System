@@ -453,3 +453,88 @@ input {
 .profile-logout:hover{
   background: #ffecec;
 }
+
+.page-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.btn-add{
+background:#2e7d32;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:500;
+}
+
+.search-bar input{
+width:300px;
+padding:8px 10px;
+border:1px solid #ddd;
+border-radius:6px;
+margin-bottom:15px;
+}
+
+.page-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.btn-add{
+background:#2e7d32;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:500;
+}
+
+.search-bar{
+margin-bottom:15px;
+}
+
+.search-bar input{
+width:300px;
+padding:8px;
+border:1px solid #ddd;
+border-radius:6px;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+}
+
+.table th{
+background:#f5f6f7;
+padding:12px;
+text-align:left;
+}
+
+.table td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.badge{
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
+}
+
+.badge.good{
+background:#e8f5e9;
+color:#2e7d32;
+}
+
+.badge.low{
+background:#ffebee;
+color:#c62828;
+}

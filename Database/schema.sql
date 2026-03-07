@@ -228,3 +228,9 @@ FROM customers c
 LEFT JOIN sales s ON s.customer_id = c.id AND s.status = 'completed'
 LEFT JOIN payments p ON p.customer_id = c.id
 GROUP BY c.id, c.name;
+
+
+
+CREATE INDEX idx_batches_fifo
+ON batches(product_id, arrival_date)
+WHERE available_qty > 0;
