@@ -22,7 +22,18 @@ const UserModel = {
     );
 
     return res.rows[0];
-  }
+  },
+  async updatePassword(id, passwordHash) {
+
+  await pool.query(
+    `UPDATE users 
+     SET password_hash = $1,
+         updated_at = NOW()
+     WHERE id = $2`,
+    [passwordHash, id]
+  );
+
+}
 
 };
 

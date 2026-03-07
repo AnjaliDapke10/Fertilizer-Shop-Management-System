@@ -81,3 +81,32 @@ exports.register = async (req, res, next) => {
   }
 
 };
+
+//Reset Password
+exports.resetPassword = async (req, res, next) => {
+
+  try {
+
+    const { username, password } = req.body;
+
+    const user = await UserModel.findByUsername(username);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found"
+      });
+    }
+
+    const hash = await bcrypt.hash(password, 10);
+
+    await UserModel.updatePassword(user.id, hash);
+
+    res.json({
+      message: "Password updated successfully"
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+};

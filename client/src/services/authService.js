@@ -13,3 +13,11 @@ export const registerUser = async (data) => {
 
   return res.data;
 };
+
+export const resetPassword = async (data) => {
+
+  const res = await api.post("/auth/reset-password", data);
+
+  return res.data;
+
+};
