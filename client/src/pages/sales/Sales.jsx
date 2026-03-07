@@ -50,7 +50,6 @@ const Sales = () => {
               "Date",
               "Payment Method",
               "Status",
-              "Actions",
             ]}
             data={sales.map((s) => ({
             invoice_number: s.invoice_number,
@@ -78,14 +77,6 @@ const Sales = () => {
                     }}
                   >
                     🖨️
-                  </button>
-
-                  <button
-                    className="icon-btn"
-                    title="Edit Sale"
-                    onClick={() => alert("Edit Sale — coming next")}
-                  >
-                    ✏️
                   </button>
                 </div>
               );

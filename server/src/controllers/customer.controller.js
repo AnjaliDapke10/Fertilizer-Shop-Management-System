@@ -26,3 +26,21 @@ exports.getCustomerOutstanding = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateCustomer = async (req,res,next)=>{
+  try{
+    const customer = await CustomerModel.update(req.params.id,req.body);
+    res.json(customer);
+  }catch(err){
+    next(err);
+  }
+};
+
+exports.deleteCustomer = async (req,res,next)=>{
+  try{
+    await CustomerModel.delete(req.params.id);
+    res.json({message:"Customer removed"});
+  }catch(err){
+    next(err);
+  }
+};
