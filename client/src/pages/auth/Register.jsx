@@ -1,47 +1,57 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../services/authService";
-import { useAuth } from "../../context/AuthContext";
+import { registerUser } from "../../services/authService";
 
-const Login = () => {
+const Register = () => {
 
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const [form, setForm] = useState({
     username: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   });
 
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
+
     setForm({
       ...form,
       [e.target.name]: e.target.value
     });
+
   };
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    setLoading(true);
-    setError("");
+
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
     try {
 
-      const userData = await loginUser(form);
+      setLoading(true);
+      setError("");
 
-      login(userData);
+      await registerUser({
+        username: form.username,
+        password: form.password
+      });
 
-      navigate("/dashboard");
+      alert("Registration successful");
+
+      navigate("/login");
 
     } catch (err) {
 
       setError(
         err.response?.data?.error ||
-        "Invalid username or password"
+        "Registration failed"
       );
 
     } finally {
@@ -49,61 +59,49 @@ const Login = () => {
       setLoading(false);
 
     }
+
   };
 
   return (
+
     <div className="login-container">
 
       <div className="login-card">
 
-        <h2>Fertilizer Shop Login</h2>
-
-        <p className="login-subtitle">
-          Enter your credentials to continue
-        </p>
+        <h2>Create Account</h2>
 
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-
             <label>Username</label>
-
             <input
               name="username"
               value={form.username}
               onChange={handleChange}
-              placeholder="Enter username"
               required
             />
-
           </div>
 
           <div className="form-group">
-
             <label>Password</label>
-
             <input
               type="password"
               name="password"
               value={form.password}
               onChange={handleChange}
-              placeholder="Enter password"
               required
             />
-
           </div>
 
-          {/* Forgot password */}
-
-          <div className="auth-links">
-
-            <span
-              className="link"
-              onClick={() => navigate("/forgot-password")}
-            >
-              Forgot Password?
-            </span>
-
+          <div className="form-group">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={form.confirmPassword}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           {error && <div className="error">{error}</div>}
@@ -113,32 +111,17 @@ const Login = () => {
             className="btn-primary full-width"
             disabled={loading}
           >
-
-            {loading ? "Logging in..." : "Login"}
-
+            {loading ? "Registering..." : "Register"}
           </button>
 
         </form>
 
-        {/* Register */}
-
-        <div className="register-link">
-
-          Don't have an account?{" "}
-
-          <span
-            className="link"
-            onClick={() => navigate("/register")}
-          >
-            Register
-          </span>
-
-        </div>
-
       </div>
 
     </div>
+
   );
+
 };
 
-export default Login;
+export default Register;

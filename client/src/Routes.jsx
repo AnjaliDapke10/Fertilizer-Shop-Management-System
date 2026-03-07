@@ -6,8 +6,8 @@ import Login from "./pages/auth/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Products from "./pages/products/Products";
 import Inventory from "./pages/inventory/Inventory";
-
-
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import Register from "./pages/auth/Register";
 import Customers from "./pages/customers/Customers";
 import Reports from "./pages/reports/Reports";
 import Suppliers from "./pages/suppliers/Suppliers";
@@ -20,8 +20,11 @@ const AppRoutes = () => (
   <Routes>
     
     <Route path="/login" element={<Login />} />
-
+    <Route path="/register" element={<Register/>}/>
+    <Route path="/forgotPassword" element={<ForgotPassword/>}/>
     {/* PROTECTED + LAYOUT */}
+
+
     <Route
       path="/dashboard"
       element={
