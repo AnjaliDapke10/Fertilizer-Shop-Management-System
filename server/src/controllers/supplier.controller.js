@@ -17,3 +17,30 @@ exports.createSupplier = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updateSupplier = async (req, res, next) => {
+  try {
+
+    const supplier = await SupplierModel.update(
+      req.params.id,
+      req.body
+    );
+
+    res.json(supplier);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteSupplier = async (req, res, next) => {
+  try {
+
+    await SupplierModel.delete(req.params.id);
+
+    res.json({ message: "Supplier deleted" });
+
+  } catch (err) {
+    next(err);
+  }
+};
