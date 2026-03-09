@@ -73,7 +73,42 @@ const AddPurchase = ({ purchaseId, onClose, onSave }) => {
 
   },[purchaseId]);
 
-  const handleItemChange = (index,field,value) => {
+  // Auto batch generator
+  const generateBatch = (productName)=>{
+
+    const year = new Date().getFullYear();
+
+    const short = productName
+      .replace(/\s+/g,"")
+      .substring(0,4)
+      .toUpperCase();
+
+    const random = Math.floor(Math.random()*900)+100;
+
+    return `${short}-${year}-${random}`;
+
+  };
+
+  const handleProductChange = (index,value)=>{
+
+    const updated=[...items];
+
+    updated[index].product_id=value;
+
+    const product = products.find(p=>p.id==value);
+
+    if(product){
+
+      updated[index].batch_number =
+        generateBatch(product.name);
+
+    }
+
+    setItems(updated);
+
+  };
+
+  const handleItemChange = (index,field,value)=>{
 
     const updated=[...items];
 
@@ -193,104 +228,104 @@ const AddPurchase = ({ purchaseId, onClose, onSave }) => {
 
       <h4 style={{marginTop:"20px"}}>Products</h4>
 
-      <table className="table">
+      <table className="purchase-table">
+  <thead>
+    <tr>
+      <th style={{width:"180px"}}>Product</th>
+      <th style={{width:"160px"}}>Batch</th>
+      <th style={{width:"150px"}}>Expiry</th>
+      <th style={{width:"100px"}}>Qty</th>
+      <th style={{width:"120px"}}>Price</th>
+      <th style={{width:"120px"}}>Total</th>
+      <th style={{width:"60px"}}></th>
+    </tr>
+  </thead>
 
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Batch</th>
-            <th>Expiry</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th></th>
-          </tr>
-        </thead>
+  <tbody>
 
-        <tbody>
+  {items.map((item,index)=>{
 
-          {items.map((item,index)=>{
+    const rowTotal =
+      (Number(item.quantity)||0) *
+      (Number(item.price)||0);
 
-            const rowTotal =
-              (Number(item.quantity)||0) *
-              (Number(item.price)||0);
+    return(
 
-            return(
+      <tr key={index}>
 
-              <tr key={index}>
+        <td>
 
-                <td>
+          <select
+            value={item.product_id}
+            onChange={e=>handleProductChange(index,e.target.value)}
+          >
 
-                  <select
-                    value={item.product_id}
-                    onChange={e=>handleItemChange(index,"product_id",e.target.value)}
-                  >
+            <option value="">Select</option>
 
-                    <option value="">Select</option>
+            {products.map(p=>(
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
 
-                    {products.map(p=>(
-                      <option key={p.id} value={p.id}>
-                        {p.name}
-                      </option>
-                    ))}
+          </select>
 
-                  </select>
+        </td>
 
-                </td>
+        <td>
+          <input
+            value={item.batch_number}
+            onChange={e=>handleItemChange(index,"batch_number",e.target.value)}
+          />
+        </td>
 
-                <td>
-                  <input
-                    value={item.batch_number}
-                    onChange={e=>handleItemChange(index,"batch_number",e.target.value)}
-                  />
-                </td>
+        <td>
+          <input
+            type="date"
+            value={item.expiry_date}
+            onChange={e=>handleItemChange(index,"expiry_date",e.target.value)}
+          />
+        </td>
 
-                <td>
-                  <input
-                    type="date"
-                    value={item.expiry_date}
-                    onChange={e=>handleItemChange(index,"expiry_date",e.target.value)}
-                  />
-                </td>
+        <td>
+          <input
+            type="number"
+            value={item.quantity}
+            onChange={e=>handleItemChange(index,"quantity",e.target.value)}
+          />
+        </td>
 
-                <td>
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={e=>handleItemChange(index,"quantity",e.target.value)}
-                  />
-                </td>
+        <td>
+          <input
+            type="number"
+            value={item.price}
+            onChange={e=>handleItemChange(index,"price",e.target.value)}
+          />
+        </td>
 
-                <td>
-                  <input
-                    type="number"
-                    value={item.price}
-                    onChange={e=>handleItemChange(index,"price",e.target.value)}
-                  />
-                </td>
+        <td>
+          ₹{rowTotal}
+        </td>
 
-                <td>₹{rowTotal}</td>
+        <td>
 
-                <td>
+          <button
+            className="remove-row"
+            onClick={()=>removeRow(index)}
+          >
+            ✕
+          </button>
 
-                  <button
-                    className="btn-danger"
-                    onClick={()=>removeRow(index)}
-                  >
-                    ❌
-                  </button>
+        </td>
 
-                </td>
+      </tr>
 
-              </tr>
+    )
 
-            );
+  })}
 
-          })}
-
-        </tbody>
-
-      </table>
+  </tbody>
+</table>
 
       <button
         className="btn-secondary"

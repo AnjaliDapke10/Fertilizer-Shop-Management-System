@@ -10,25 +10,59 @@ const Products = () => {
   const [search, setSearch] = useState("");
   const [showAdd, setShowAdd] = useState(false);
 
-  // Load products from API
-  const loadProducts = () => {
-    setLoading(true);
+  const fetchProducts = async () => {
 
-    getProducts()
-      .then(res => {
-        setProducts(res.data);
-      })
-      .finally(() => setLoading(false));
-  };
+  setLoading(true);
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
+  try {
+
+    const data = await getProducts();
+
+    setProducts(Array.isArray(data) ? data : []);
+
+  } catch (err) {
+
+    console.error("Failed to load products", err);
+    setProducts([]);
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+};
+
+useEffect(() => {
+
+  fetchProducts();
+
+}, []);
+ // Load products from API
+const loadProducts = () => {
+
+  setLoading(true);
+
+  getProducts()
+    .then(products => {
+      setProducts(products);
+    })
+    .catch(err => {
+      console.error("Failed to load products", err);
+      setProducts([]);
+    })
+    .finally(() => setLoading(false));
+
+};
+
+useEffect(() => {
+  loadProducts();
+}, []);
 
   // Search filter
-  const filteredProducts = products.filter(p =>
-    p.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredProducts = (products || []).filter(p =>
+  p.name.toLowerCase().includes(search.toLowerCase())
+);
 
   if (loading) return <Loader />;
 
