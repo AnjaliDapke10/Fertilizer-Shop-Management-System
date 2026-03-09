@@ -234,3 +234,6 @@ GROUP BY c.id, c.name;
 CREATE INDEX idx_batches_fifo
 ON batches(product_id, arrival_date)
 WHERE available_qty > 0;
+
+CREATE SEQUENCE purchase_invoice_seq
+START 1;
