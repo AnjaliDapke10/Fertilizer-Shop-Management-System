@@ -660,3 +660,57 @@ td.address-column {
   justify-content: flex-end;
   gap: 10px;
 }
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  border: none;
+  background: #f3f4f6;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  background: #e5e7eb;
+}
+
+.badge.good {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge.low {
+  background: #fde68a;
+  color: #92400e;
+}
+
+.badge.danger {
+  background: #fecaca;
+  color: #7f1d1d;
+}
+
+.btn-icon.edit {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.btn-icon.edit:hover {
+  background: #bfdbfe;
+}
+
+.btn-icon.delete {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-icon.delete:hover {
+  background: #fecaca;
+}
+
+.table tbody tr:hover {
+  background: #f9fafb;
+}

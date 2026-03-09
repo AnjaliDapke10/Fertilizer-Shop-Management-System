@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { createProduct } from "../../services/productService";
 
-const AddProduct = ({ onClose, onSuccess }) => {
+const AddProduct = ({ onClose, onSuccess,product }) => {
 
   const [form, setForm] = useState({
-    name: "",
-    npk_ratio: "",
-    unit: "kg",
-    gst_rate: "",
-    reorder_level: ""
-  });
+  name: product?.name || "",
+  npk_ratio: product?.npk_ratio || "",
+  unit: product?.unit || "kg",
+  gst_rate: product?.gst_rate || "",
+  reorder_level: product?.reorder_level || ""
+});
 
   const handleChange = (e) => {
     setForm({
@@ -19,13 +19,17 @@ const AddProduct = ({ onClose, onSuccess }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
+  if (product) {
+    await updateProduct(product.id, form);
+  } else {
     await createProduct(form);
+  }
 
-    onSuccess();
-    onClose();
-  };
+  onSuccess();
+  onClose();
+};
 
   return (
     <div className="modal-overlay">
@@ -33,7 +37,7 @@ const AddProduct = ({ onClose, onSuccess }) => {
       <div className="modal modal-md">
 
         <div className="modal-header">
-          <h3>Add New Product</h3>
+          <h3>{product ? "Edit Product" : "Add New Product"}</h3>
           <button onClick={onClose}>✕</button>
         </div>
 

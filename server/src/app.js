@@ -9,6 +9,8 @@ const saleRoutes = require("./routes/sale.routes");
 const paymentRoutes = require("./routes/payment.routes");
 const inventoryRoutes = require("./routes/inventory.routes");
 const reportRoutes = require("./routes/report.routes");
+const batchRoutes = require("./routes/batch.routes");
+
 const app = express();
 
 app.use(cors());
@@ -18,6 +20,7 @@ app.get("/health",(req,res)=>{
     res.json({status:"ok",service:"Fertilizer Shop Backend"});
 });
 
+app.use("/api/batches", batchRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/purchases", purchaseRoutes);
 app.use("/api/suppliers", supplierRoutes);
