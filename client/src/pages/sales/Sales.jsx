@@ -59,7 +59,7 @@ const Sales = () => {
             data={sales.map((s) => ({
               invoice_number: s.invoice_number,
               customer_name: s.customer_name || "Walk-in",
-              items: s.item_count || "-",
+              items: s.item_count ? `${s.item_count}` : "0",
               total_amount: `₹${s.total_amount}`,
               sale_date: new Date(s.sale_date).toLocaleDateString(),
               payment_method: formatPaymentMethod(s.payment_method),

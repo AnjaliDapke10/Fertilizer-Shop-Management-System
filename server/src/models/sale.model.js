@@ -3,46 +3,60 @@ const allocateFIFO = require("../utils/fifoAllocator");
 
 const SaleModel = {
   async getAllSales() {
-  const { rows } = await pool.query(`
-    SELECT
-      s.id,
-      s.invoice_number,
-      s.sale_date,
-      s.total_amount,
-      s.created_at,
 
-      c.name AS customer_name,
+const { rows } = await pool.query(`
 
-      COALESCE(
-        (
-          SELECT p.method
-          FROM payments p
-          WHERE p.sale_id = s.id
-          ORDER BY p.payment_date DESC
-          LIMIT 1
-        ),
-        'cash'
-      ) AS payment_method,
+SELECT
+  s.id,
+  s.invoice_number,
+  s.sale_date,
+  s.total_amount,
+  s.created_at,
 
-      CASE
-        WHEN COALESCE(
-          (
-            SELECT SUM(p.amount)
-            FROM payments p
-            WHERE p.sale_id = s.id
-          ), 0
-        ) >= s.total_amount
-        THEN 'completed'
-        ELSE 'pending'
-      END AS status
+  c.name AS customer_name,
 
-    FROM sales s
-    LEFT JOIN customers c ON c.id = s.customer_id
-    ORDER BY s.sale_date DESC
-  `);
+  COUNT(si.id) AS item_count,
 
-  return rows;
+  COALESCE(
+    (
+      SELECT p.method
+      FROM payments p
+      WHERE p.sale_id = s.id
+      ORDER BY p.payment_date DESC
+      LIMIT 1
+    ),
+    'cash'
+  ) AS payment_method,
 
+  CASE
+    WHEN COALESCE(
+      (
+        SELECT SUM(p.amount)
+        FROM payments p
+        WHERE p.sale_id = s.id
+      ), 0
+    ) >= s.total_amount
+    THEN 'completed'
+    ELSE 'pending'
+  END AS status
+
+FROM sales s
+
+LEFT JOIN customers c
+ON c.id = s.customer_id
+
+LEFT JOIN sale_items si
+ON si.sale_id = s.id
+
+GROUP BY
+s.id,
+c.name
+
+ORDER BY s.sale_date DESC
+
+`);
+
+return rows;
 
 },
   async createSale(data) {
