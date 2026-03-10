@@ -19,3 +19,8 @@ export const getAvailableProducts = async () => {
   const res = await api.get("/inventory/available-products");
   return res.data;
 };
+
+export const getInventorySummary = async () => {
+  const res = await api.get("/inventory/summary");
+  return res.data;
+};

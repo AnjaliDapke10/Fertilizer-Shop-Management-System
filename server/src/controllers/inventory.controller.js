@@ -37,3 +37,12 @@ exports.getAvailableProducts = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getInventorySummary = async (req, res, next) => {
+  try {
+    const data = await InventoryModel.getInventorySummary();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+};

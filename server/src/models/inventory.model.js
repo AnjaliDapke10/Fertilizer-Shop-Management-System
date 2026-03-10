@@ -73,6 +73,24 @@ async getAvailableProducts() {
 
   const { rows } = await pool.query(query);
   return rows;
+},
+async getInventorySummary() {
+
+  const query = `
+    SELECT
+      p.id,
+      p.name,
+      p.reorder_level,
+      COALESCE(SUM(b.available_qty),0) AS available_qty
+    FROM products p
+    LEFT JOIN batches b
+      ON b.product_id = p.id
+    GROUP BY p.id
+    ORDER BY p.name
+  `;
+
+  const { rows } = await pool.query(query);
+  return rows;
 }
 
 };
