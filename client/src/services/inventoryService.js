@@ -14,3 +14,8 @@ export const getStockAging = async () => {
   const res = await api.get("/inventory/aging");
   return res.data;
 };
+
+export const getAvailableProducts = async () => {
+  const res = await api.get("/inventory/available-products");
+  return res.data;
+};

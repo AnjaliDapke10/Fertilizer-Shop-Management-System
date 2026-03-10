@@ -714,3 +714,10 @@ td.address-column {
 .table tbody tr:hover {
   background: #f9fafb;
 }
+
+.bill-row{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+font-size:14px;
+}

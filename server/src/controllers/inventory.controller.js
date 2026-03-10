@@ -27,3 +27,13 @@ exports.getStockAging = async (req, res, next) => {
     next(err);
   }
 };
+
+
+exports.getAvailableProducts = async (req, res, next) => {
+  try {
+    const data = await InventoryModel.getAvailableProducts();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+};
